@@ -1,0 +1,48 @@
+name: Release workflow
+
+on:
+  push:
+    tags:
+      - '*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Release on GitHub
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.3
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv
+          coverage: none
+          
+      - name: Run composer install
+        run: composer install --no-dev
+
+      - name: Build project
+        run: |
+          cd /home/runner/work/vnc_link/
+          rm -r vnc_link/.git* vnc_link/tools vnc_link/composer.*
+          tar -zcvf vnc_link-${{ github.ref_name }}.tgz vnc_link
+
+      - name: Upload release
+        uses: actions/upload-artifact@v4
+        with:
+          name: vnc_link-${{ github.ref_name }}.tgz
+          path: /home/runner/work/vnc_link/vnc_link-${{ github.ref_name }}.tgz
+      
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: /home/runner/work/vnc_link/vnc_link-${{ github.ref_name }}.tgz
+          body: "New release is available"
+          name: ${{ github.ref_name }}
+          draft: false
+          generate_release_notes: true
