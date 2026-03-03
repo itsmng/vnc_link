@@ -1,0 +1,16 @@
+{
+    "name": "itsmng/vnc_link",
+    "description": "VNC Link Plugin for ITSM-NG",
+    "autoload": {
+        "psr-4": {
+            "GlpiPlugin\\VncLink\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "ITSMNG Team",
+            "email": "contact@itsm-ng.org"
+        }
+    ],
+    "require": {}
+}

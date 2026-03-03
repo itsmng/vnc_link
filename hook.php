@@ -1,82 +1,65 @@
 <?php
 
-function plugin_skeleton_install() {
-   set_time_limit(900);
-   ini_set('memory_limit', '2048M');
+use GlpiPlugin\VncLink\PluginVncLinkConfig;
+use GlpiPlugin\VncLink\PluginVncLinkProfile;
 
-   $classesToInstall = [
-      'PluginSkeletonConfig',
-      'PluginSkeletonProfile',
-   ];
+function plugin_vnc_link_install(): bool
+{
+    set_time_limit(900);
+    ini_set('memory_limit', '2048M');
 
-   echo "<center>";
-   echo "<table class='tab_cadre_fixe'>";
-   echo "<tr><th>".__("MySQL tables installation", "skeleton")."<th></tr>";
+    $classesToInstall = [
+        PluginVncLinkConfig::class,
+        PluginVncLinkProfile::class,
+    ];
 
-   echo "<tr class='tab_bg_1'>";
-   echo "<td align='center'>";
+    echo "<center>";
+    echo "<table class='tab_cadre_fixe'>";
+    echo "<tr><th>".__("MySQL tables installation", "vnc_link")."<th></tr>";
 
-   //load all classes
-   $dir  = Plugin::getPhpDir('skeleton') . "/inc/";
-   foreach ($classesToInstall as $class) {
-      if ($plug = isPluginItemType($class)) {
-         $item = strtolower($plug['class']);
-         if (file_exists("$dir$item.class.php")) {
-            include_once ("$dir$item.class.php");
-         }
-      }
-   }
+    echo "<tr class='tab_bg_1'>";
+    echo "<td align='center'>";
 
-   //install
-   foreach ($classesToInstall as $class) {
-      if ($plug = isPluginItemType($class)) {
-         $item =strtolower($plug['class']);
-         if (file_exists("$dir$item.class.php")) {
-            if (!call_user_func([$class,'install'])) {
-               return false;
+    foreach ($classesToInstall as $class) {
+        if (isPluginItemType($class)) {
+            if (!call_user_func([$class, 'install'])) {
+                return false;
             }
-         }
-      }
-   }
+        }
+    }
 
-   echo "</td>";
-   echo "</tr>";
-   echo "</table></center>";
+    echo "</td>";
+    echo "</tr>";
+    echo "</table></center>";
 
-   return true;
+    return true;
 }
 
-function plugin_skeleton_uninstall() {
-   echo "<center>";
-   echo "<table class='tab_cadre_fixe'>";
-   echo "<tr><th>".__("MySQL tables uninstallation", "fields")."<th></tr>";
+function plugin_vnc_link_uninstall(): bool
+{
+    echo "<center>";
+    echo "<table class='tab_cadre_fixe'>";
+    echo "<tr><th>".__("MySQL tables uninstallation", "vnc_link")."<th></tr>";
 
-   echo "<tr class='tab_bg_1'>";
-   echo "<td align='center'>";
+    echo "<tr class='tab_bg_1'>";
+    echo "<td align='center'>";
 
-   $classesToUninstall = [
-      'PluginSkeletonConfig',
-      'PluginSkeletonProfile',
-   ];
+    $classesToUninstall = [
+        PluginVncLinkConfig::class,
+        PluginVncLinkProfile::class,
+    ];
 
-   foreach ($classesToUninstall as $class) {
-      if ($plug = isPluginItemType($class)) {
-
-         $dir  = Plugin::getPhpDir('skeleton') . "/inc/";
-         $item = strtolower($plug['class']);
-
-         if (file_exists("$dir$item.class.php")) {
-            include_once ("$dir$item.class.php");
-            if (!call_user_func([$class,'uninstall'])) {
-               return false;
+    foreach ($classesToUninstall as $class) {
+        if (isPluginItemType($class)) {
+            if (!call_user_func([$class, 'uninstall'])) {
+                return false;
             }
-         }
-      }
-   }
+        }
+    }
 
-   echo "</td>";
-   echo "</tr>";
-   echo "</table></center>";
+    echo "</td>";
+    echo "</tr>";
+    echo "</table></center>";
 
-   return true;
+    return true;
 }

@@ -1,8 +1,13 @@
 <?php
 
-class PluginSkeletonConfig extends CommonDBTM {
+namespace GlpiPlugin\VncLink;
 
-    static function install() {
+use CommonDBTM;
+
+class PluginVncLinkConfig extends CommonDBTM
+{
+    public static function install(): bool
+    {
         global $DB;
 
         $table = self::getTable();
@@ -22,7 +27,8 @@ SQL;
         return true;
     }
 
-    static function uninstall() {
+    public static function uninstall(): bool
+    {
         global $DB;
 
         $table = self::getTable();
@@ -38,7 +44,8 @@ SQL;
         return true;
     }
 
-    static private function getConfigValues() {
+    private static function getConfigValues(): array
+    {
         global $DB;
 
         $table = self::getTable();
@@ -56,7 +63,8 @@ SQL;
         return $results;
     }
 
-    static function updateConfigValues($values) {
+    public static function updateConfigValues(array $values): bool
+    {
         global $DB;
 
         $table = self::getTable();
@@ -73,13 +81,8 @@ SQL;
         return true;
     }
 
-
-    /**
-     * Displays the configuration page for the plugin
-     *
-     * @return void
-     */
-    public function showConfigForm() {
-        echo "SKELETON CONFIG FORM";
+    public function showConfigForm(): void
+    {
+        echo "VNC_LINK CONFIG FORM";
     }
 }

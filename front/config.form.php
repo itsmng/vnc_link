@@ -1,20 +1,22 @@
 <?php
+
 include("../../../inc/includes.php");
-require_once(Plugin::getPhpDir('skeleton') . "/inc/config.class.php");
+
+use GlpiPlugin\VncLink\PluginVncLinkConfig;
 
 $plugin = new Plugin();
 
-if($plugin->isActivated("skeleton")) {
-    $config = new PluginSkeletonConfig();
-    if(isset($_POST["update"])) {
-        Session::checkRight("plugin_skeleton_config", UPDATE);
-        $config::updateConfigValues($_POST);
+if ($plugin->isActivated("vnc_link")) {
+    $config = new PluginVncLinkConfig();
+    if (isset($_POST["update"])) {
+        Session::checkRight("plugin_vnc_link_config", UPDATE);
+        PluginVncLinkConfig::updateConfigValues($_POST);
     } else {
-        if (!Session::haveRight("plugin_skeleton_config", READ | UPDATE)) {
+        if (!Session::haveRight("plugin_vnc_link_config", READ | UPDATE)) {
             Html::displayRightError();
             return;
         }
-        Html::header("Okta", $_SERVER["PHP_SELF"], "config", Plugin::class);
+        Html::header("VNC Link", $_SERVER["PHP_SELF"], "config", Plugin::class);
         $config->showConfigForm();
     }
 } else {
