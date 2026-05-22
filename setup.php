@@ -17,8 +17,8 @@ function plugin_version_vnc_link(): array
         'name'           => 'Vnc_link Plugin',
         'version'        => VNC_LINK_VERSION,
         'author'         => 'ITSMNG Team',
-        'homepage'       => 'https://github.com/itsmng/plugin-vnc_link',
-        'license'        => '<a href="../plugins/plugin-vnc_link/LICENSE" target="_blank">GPLv3</a>',
+        'homepage'       => 'https://github.com/itsmng/vnc_link',
+        'license'        => '<a href="../plugins/vnc_link/LICENSE" target="_blank">GPLv3</a>',
     ];
 }
 
